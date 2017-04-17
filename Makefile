@@ -8,7 +8,12 @@ EXECUTABLE=ftcv
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-    $(CC) $(LDFLAGS) $(OBJECTS) -o $@
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
 .o:
-    $(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
+
+.PHONY: clean
+
+clean:
+	rm -f *.o $(EXECUTABLE)
