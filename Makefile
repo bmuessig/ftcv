@@ -3,7 +3,7 @@ CFLAGS=-c -Wall
 LDFLAGS=
 SOURCES=ftcv.c recv.c send.c utils.c buffers.c
 OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLE=ftcv
+EXECUTABLE=ftcv.elf
 
 all: $(SOURCES) $(EXECUTABLE)
 
