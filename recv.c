@@ -8,4 +8,10 @@ unsigned int recv(FILE* file)
     else
       ptr = 0;
   }*/
+
+  // Initialize the Timer
+/*  tmr = tmr_start();
+  timedOut = false;
+   && !(timedOut = (tmr_check(tmr) / 1000) >= ACK_TIMEOUT)
+*/
 }

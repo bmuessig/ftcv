@@ -6,14 +6,14 @@ int main(int argc, char** argv)
     FILE *file;
 
     if(strcicmp(argv[1], "send") == 0) {
-      if((file = fopen(argv[2], "r")) != NULL) {
+      if((file = fopen(argv[2], "rb")) != NULL) {
         unsigned int success = send(file);
         fclose(file);
         return (!success) ? 0 : -2;
       } else
         printf("Cannot open file '%s' for reading!\nExiting.\n", argv[2]);
     } else if(strcicmp(argv[1], "receive") == 0) {
-      if((file = fopen(argv[2], "w")) != NULL) {
+      if((file = fopen(argv[2], "wb")) != NULL) {
         unsigned int success = recv(file);
         fflush(file);
         fclose(file);
