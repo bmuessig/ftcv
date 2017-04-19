@@ -4,5 +4,6 @@
 #include "config.h"
 
 extern unsigned char tcxBuf[];
+extern unsigned int tcxPtr;
 
 #endif

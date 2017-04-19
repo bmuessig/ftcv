@@ -1,6 +1,9 @@
 #ifndef PROTO_H
 #define PROTO_H
 
+#include <stdio.h>
+#include "utils.h"
+
 // Protocol version
 #define FTCV_PROTO_VER 0x01
 
@@ -18,18 +21,15 @@
 #define FTCV_PROTO_ACK 0x06
 // Not Acknowledge (e.g. CRC32 missmatch)
 #define FTCV_PROTO_NAK 0x15
-// Synchronisation packet with the current block number
-#define FTCV_PROTO_SYN 0x16
 // Cancel the entire transmission (client to server)
 #define FTCV_PROTO_CAN 0x18
 // Data escape sequence
 // 0x10 0x10 referrs the the data byte 0x10. (server to client)
 // 0x10 0x02 definitively marks the end of block. (server to client)
-// 0x10 0x16 requests the current offset in the block (client to server)
-// 0x10 0x18 cancels the entire transmission (client to server)
+// (0x10) 0x18 cancels the entire transmission
 // All other sequences are undefined and are skipped
-#define FTCV_PROTO_DLE 0x10;
+#define FTCV_PROTO_DLE 0x10
 
-int awaitAck(unsigned int timeout);
+int awaitResponse(unsigned int timeout);
 
 #endif

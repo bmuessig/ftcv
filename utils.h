@@ -22,8 +22,9 @@ int freadint(int* value, unsigned int timeout, FILE* file);
 size_t freadt(void* ptr, size_t size, size_t count, unsigned int timeout, FILE* stream);
 int fsetblocking(int isBlocking, FILE* file);
 
-int strcicmp(char const *a, char const *b);
-unsigned int crc32(unsigned char *data, unsigned int size);
+int strcicmp(char const* a, char const* b);
+unsigned int crc32(unsigned char* data, unsigned int size);
+unsigned int fcrc32(FILE* file);
 
 typedef unsigned long usecs;
 

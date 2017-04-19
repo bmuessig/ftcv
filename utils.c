@@ -119,6 +119,23 @@ unsigned int crc32(unsigned char *data, unsigned int size)
   return ~crc;
 }
 
+// adapted from http://www.hackersdelight.org/hdcodetxt/crc.c.txt
+unsigned int fcrc32(FILE* file)
+{
+  int byte;
+  unsigned int i, mask, crc = 0xFFFFFFFF;
+
+  while((byte = fgetc(file)) != EOF) { // Do while new bytes are available
+    crc = crc ^ byte;
+    for(i = 7; i >= 0; i--) { // Do eight times
+      mask = -(crc & 1);
+      crc = (crc >> 1) ^ (0xEDB88320 & mask);
+    }
+  }
+
+  return ~crc;
+}
+
 usecs tmr_start(void)
 {
   struct timeval v;

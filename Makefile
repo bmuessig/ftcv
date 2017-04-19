@@ -5,6 +5,8 @@ SOURCES=ftcv.c recv.c send.c proto.c utils.c buffers.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=ftcv.elf
 
+#CFLAGS:=-v -da -Q
+
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)

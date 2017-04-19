@@ -8,6 +8,7 @@
 
 // Transceive buffer size, usually 512 bytes
 #define TCX_BUFF_BITS 9
+#define TCX_BUFF_SBLK (1 << (TCX_BUFF_BITS - 5))
 #define TCX_BUFF_LEN (1 << (TCX_BUFF_BITS))
 
 #endif
