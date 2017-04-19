@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-c -Wall
 LDFLAGS=
-SOURCES=ftcv.c recv.c send.c utils.c buffers.c
+SOURCES=ftcv.c recv.c send.c proto.c utils.c buffers.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=ftcv.elf
 
