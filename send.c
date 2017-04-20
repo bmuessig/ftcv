@@ -3,31 +3,44 @@
 unsigned int send(FILE* file)
 {
   unsigned int ptr = 0, try;
-  int chr, magic[] = {FTCV_PROTO_SOH, 'F', 'T', 'C', 'V', FTCV_PROTO_VER,
-    TCX_BUFF_BITS, FTCV_PROTO_ETB},
-    magicSize = sizeof(magic);
+  int chr;
 
   // Clear the transmit buffer
   memset(tcxBuf, 0, TCX_BUFF_LEN);
+
+  DBGS("SEND, Init, sending header");
 
   for(try = 0; try < MAX_TRIES; try++) {
     // Clear the input buffer
     fflushi(stdin);
 
     // Start the transmission and send the header
-    for(; ptr < magicSize; ptr++)
-      fputc(magic[ptr], stdout);
+    for(; ptr < protoMagicSize; ptr++)
+      fputc(protoMagic[ptr], stdout);
+
+    DBGS("SEND, Header sent, wait for ACK");
 
     // Wait for an Acknowledge
     // awaitResponse will return -1 on error or timeout, 0 on eof and 1 on success
-    if((chr = awaitResponse(ACK_TIMEOUT)) == FTCV_PROTO_ACK) // we got an ack
+    if((chr = awaitResponse(ACK_TIMEOUT * 100)) == FTCV_PROTO_ACK) // we got an ack
       break;
     else if(chr == FTCV_PROTO_CAN || chr == 0) { // the stream is over
+      DBGS("SEND, Transfer aborted");
       // Confirm with a CAN
       fputc(FTCV_PROTO_CAN, stdout);
       return 1;
     }
   }
+
+  // Check whether we have exceeded our tries
+  if(try >= MAX_TRIES) {
+    // Cancel the transfer
+    DBGS("SEND, Transfer failed");
+    fputc(FTCV_PROTO_CAN, stdout);
+    return 1;
+  }
+
+  DBGS("SEND, Connection established");
 
   // The connection is now established, let's send the number of blocks
   // So calculate the file size first
@@ -42,6 +55,8 @@ unsigned int send(FILE* file)
     dataBlocks++;
   } else
     dataBlocks = dataBytes / TCX_BUFF_LEN;
+
+  DBGI("SEND, Sending blocks", dataBlocks);
 
   for(try = 0; try < MAX_TRIES; try++) {
     // Send an ACK back
@@ -64,6 +79,13 @@ unsigned int send(FILE* file)
       fputc(FTCV_PROTO_CAN, stdout);
       return 1;
     }
+  }
+
+  // Check whether we have exceeded our tries
+  if(try >= MAX_TRIES) {
+    // Cancel the transfer
+    fputc(FTCV_PROTO_CAN, stdout);
+    return 1;
   }
 
   // Send an ack back

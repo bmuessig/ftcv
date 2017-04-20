@@ -2,6 +2,7 @@
 #define PROTO_H
 
 #include <stdio.h>
+#include "config.h"
 #include "utils.h"
 
 // Protocol version
@@ -15,6 +16,8 @@
 #define FTCV_PROTO_ETX 0x03
 // Successfull end of the whole transmission
 #define FTCV_PROTO_EOT 0x04
+// Enquire resend of ack
+#define FTCV_PROTO_ENQ 0x05
 // End of data block, needs an ack to continiue
 #define FTCV_PROTO_ETB 0x17
 // Acknowledge
@@ -29,6 +32,8 @@
 // (0x10) 0x18 cancels the entire transmission
 // All other sequences are undefined and are skipped
 #define FTCV_PROTO_DLE 0x10
+
+extern unsigned char protoMagic[], protoMagicSize;
 
 int awaitResponse(unsigned int timeout);
 

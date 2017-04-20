@@ -6,6 +6,7 @@ OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=ftcv.elf
 
 #CFLAGS:=-v -da -Q
+CFLAGS:= -DDEBUG
 
 all: $(SOURCES) $(EXECUTABLE)
 

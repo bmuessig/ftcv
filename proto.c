@@ -1,5 +1,8 @@
 #include "proto.h"
 
+unsigned char protoMagic[] = {FTCV_PROTO_SOH, 'F', 'T', 'C', 'V', FTCV_PROTO_VER,
+  TCX_BUFF_BITS, FTCV_PROTO_ETB}, protoMagicSize = sizeof(protoMagic);
+
 int awaitResponse(unsigned int timeout)
 {
   unsigned char resp;
